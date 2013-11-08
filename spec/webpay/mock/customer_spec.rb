@@ -18,7 +18,7 @@ describe WebPay::Mock::Customer do
     it { expect(customer.active_card).to be_nil }
 
     context 'with card' do
-      let(:params)  do
+      let(:params) do
         {
           card: {
             number: '4242424242424242',
