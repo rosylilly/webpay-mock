@@ -23,13 +23,17 @@ class WebPay::Mock::Object
     { 'id' => id, 'deleted' => true }
   end
 
+  def default
+    {}
+  end
+
   def initialize(attributes)
-    @attributes = attributes
+    @attributes = default.merge(attributes)
     @created_at = Time.now
   end
 
   def update(params)
-    @attributes = params
+    @attributes.merge!(params)
   end
 
   def id
