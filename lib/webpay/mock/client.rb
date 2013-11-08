@@ -9,7 +9,7 @@ class WebPay::Mock::Client
     request(:post, path, params)
   end
 
-  def delete(path, params)
+  def delete(path, params = {})
     request(:delete, path, params)
   end
 

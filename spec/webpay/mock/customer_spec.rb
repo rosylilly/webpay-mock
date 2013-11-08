@@ -48,4 +48,10 @@ describe WebPay::Mock::Customer do
 
     it { expect(customer.email).to eq('example@webpay.jp') }
   end
+
+  describe '#delete' do
+    subject { customer.delete }
+
+    it { should be_true }
+  end
 end
