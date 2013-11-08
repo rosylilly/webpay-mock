@@ -1,14 +1,16 @@
 require 'spec_helper'
 
 describe WebPay::Mock::Customer do
+  let(:params) do
+    {
+      email: 'rosylilly@aduca.org',
+      description: 'webpay-mock',
+    }
+  end
+  let(:customer) { WebPay::Customer.create(params) }
+
   describe '#create' do
-    let(:params) do
-      {
-        email: 'rosylilly@aduca.org',
-        description: 'webpay-mock',
-      }
-    end
-    subject(:customer) { WebPay::Customer.create(params) }
+    subject { customer }
 
     it { should_not be_nil }
     it { should be_kind_of(WebPay::Customer) }
@@ -30,5 +32,20 @@ describe WebPay::Mock::Customer do
 
       it { expect(customer.active_card).to be_kind_of(WebPay::Card) }
     end
+  end
+
+  describe '#retrieve' do
+    subject { WebPay::Customer.retrieve(customer.id) }
+
+    it { should == customer }
+  end
+
+  describe '#update' do
+    before do
+      customer.email = 'example@webpay.jp'
+      customer.save
+    end
+
+    it { expect(customer.email).to eq('example@webpay.jp') }
   end
 end

@@ -1,7 +1,7 @@
 require 'webpay/mock'
 
 class WebPay::Mock::Client
-  def get(path, params)
+  def get(path, params = {})
     request(:get, path, params)
   end
 

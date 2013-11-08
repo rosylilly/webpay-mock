@@ -1,9 +1,35 @@
 require 'webpay/mock'
 
 class WebPay::Mock::Object
+  def self.create(params, id = nil)
+    object = new(params)
+
+    WebPay::Mock.storage[object.id.to_s] = object
+  end
+
+  def self.retrieve(params, id)
+    WebPay::Mock.storage[id]
+  end
+
+  def self.update(params, id)
+    retrieve({}, id).tap do |object|
+      object.update(params)
+    end
+  end
+
+  def self.delete(params, id)
+    WebPay::Mock.storage.delete(id)
+
+    { 'id' => id, 'deleted' => true }
+  end
+
   def initialize(attributes)
     @attributes = attributes
     @created_at = Time.now
+  end
+
+  def update(params)
+    @attributes = params
   end
 
   def id

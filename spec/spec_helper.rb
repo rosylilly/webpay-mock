@@ -12,4 +12,8 @@ RSpec.configure do |config|
   config.around do |e|
     WebPay::Mock.enable! { e.run }
   end
+
+  config.after(:each) do
+    WebPay::Mock.clear!
+  end
 end

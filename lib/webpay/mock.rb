@@ -1,6 +1,7 @@
 require 'webpay'
 require 'webpay/mock/version'
 require 'webpay/mock/id'
+require 'webpay/mock/storage'
 require 'webpay/mock/client'
 require 'webpay/mock/object'
 require 'webpay/mock/card'
@@ -31,5 +32,13 @@ module WebPay::Mock
     WebPay.instance_eval do
       @client = WebPay::Mock.original_client
     end
+  end
+
+  def self.storage
+    @storage ||= WebPay::Mock::Storage.new({})
+  end
+
+  def self.clear!
+    @storage = nil
   end
 end
