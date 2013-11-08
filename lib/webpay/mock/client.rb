@@ -16,7 +16,14 @@ class WebPay::Mock::Client
   def request(method, path, params)
     object, id, action = *(path.sub(%r{^/}, '').split('/'))
 
-    class_by(object).send(method_by(method, id, action), params, id)
+    ret = class_by(object)\
+      .send(
+        method_by(method, id, action),
+        symbolize(params),
+        id
+      )
+
+    ret ? ret.to_hash : nil
   end
 
   def class_by(object)
@@ -59,5 +66,15 @@ class WebPay::Mock::Client
     else
       action.to_sym
     end
+  end
+
+  private
+
+  def symbolize(hash)
+    new_hash = {}
+    hash.each_pair do |key, val|
+      new_hash[key.to_s.to_sym] = val === Hash ? symbolize(val) : val
+    end
+    new_hash
   end
 end

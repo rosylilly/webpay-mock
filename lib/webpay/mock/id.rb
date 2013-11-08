@@ -8,15 +8,15 @@ class WebPay::Mock::ID
 
   def prefix
     case @object
-    when WebPay::Customer
+    when WebPay::Mock::Customer
       'cus'
-    when WebPay::Charge
+    when WebPay::Mock::Charge
       'ch'
-    when WebPay::Token
+    when WebPay::Mock::Token
       'tok'
-    when WebPay::Event
+    when WebPay::Mock::Event
       'evt'
-    when WebPay::Account
+    when WebPay::Mock::Account
       'acct'
     else
       'unknown'
